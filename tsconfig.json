@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",  // or "nodenext" if using ES modules extensively
+        "target": "es6",               // Compile to ES6
+        "baseUrl": ".",
+        "paths": {
+            "@monorepo/*": ["packages/*/src"]
+        }
+    }
+}
+
