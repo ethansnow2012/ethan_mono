@@ -14,6 +14,7 @@
     "ts-node": "^10.9.2"
   },
   "scripts": {
-    "dev:using_core": "cd packages/using_core && pnpm run dev"
+    "apps:my_three": "cd apps/my_first_three_project_with_nuxt && pnpm run dev",
+    "packages:using_core": "cd packages/using_core && pnpm run dev"
   }
 }
