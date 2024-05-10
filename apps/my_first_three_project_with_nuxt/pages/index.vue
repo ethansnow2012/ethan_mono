@@ -1,8 +1,7 @@
 <template>
   <div>
-    222
-    <!-- <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout> -->
+    <ClientOnly fallbackTag="div">
+      <TheExperience />
+    </ClientOnly>
   </div>
 </template>
