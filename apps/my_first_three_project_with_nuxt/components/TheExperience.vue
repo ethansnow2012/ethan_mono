@@ -8,6 +8,7 @@ import { AmbientLight } from "three"
 let renderer: WebGLRenderer
 let controls: OrbitControls
 const experience: Ref<HTMLCanvasElement | null> = ref(null)
+const isLoading = ref(true)
 
 const { width, height } = useWindowSize()
 const aspectRatio = computed(() => width.value / height.value)
@@ -27,6 +28,7 @@ scene.add(anbientLight)
 gltfLoader.load("/models/the_house_lost_at_sea/scene.gltf", (gltf) => {
   scene.add(gltf.scene)
   console.log("gltf", gltf)
+  isLoading.value = false // Set loading to false when the model is loaded
 })
 
 const sphere = new Mesh(new SphereGeometry(1, 32, 32), new MeshBasicMaterial({ color: 0x008080 }))
@@ -71,22 +73,41 @@ const loop = () => {
 </script>
 <template>
   <div class="scene">
-    <canvas ref="experience" />
+    <canvas ref="experience"></canvas>
     <div class="scene-attribute">
       Scene Attribution: <a href="https://sketchfab.com/3d-models/the-house-lost-at-sea-1b3b3b3b3b3b4">Michel Donze</a>
     </div>
+    <div v-if="isLoading" class="loading-overlay">Loading...</div>
   </div>
 </template>
 <style scoped>
 .scene {
   position: relative;
+  width: 100%; /* Ensure full width */
+  height: 100vh; /* Ensure full viewport height */
 }
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 2em;
+}
+
 .scene-attribute {
   color: white;
   position: absolute;
   bottom: 16px;
   right: 16px;
 }
+
 .scene-attribute a {
   color: white;
 }
