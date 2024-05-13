@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streaming Server UI</title>
+</head>
+<body>
+    <h1>Welcome to the Streaming Server</h1>
+    <p>Data will appear below:</p>
+    <div id="data"></div>
+    <script>
+        const dataDiv = document.getElementById('data');
+        const source = new EventSource('/stream');
+
+        source.onmessage = function(event) {
+            // const message = document.createElement('p');
+            // message.textContent = 
+            //dataDiv.appendChild(message);
+            dataDiv.innerHTML += event.data;
+        };
+
+        source.addEventListener('close', function(event) {
+            source.close();  // This stops the EventSource from reconnecting
+            const message = document.createElement('p');
+            message.textContent = "Stream has ended. Connection closed.";
+            dataDiv.appendChild(message);
+        });
+
+    </script>
+</body>
+</html>
