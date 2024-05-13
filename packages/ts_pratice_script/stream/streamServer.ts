@@ -38,7 +38,7 @@ const server = http.createServer((req, res) => {
 
         // Stream the contents of the file to the client
         const filePath = path.join(__dirname, 'streamDataIn.txt');
-        const readStream = fs.createReadStream(filePath, { encoding: 'utf-8', highWaterMark: 4 });
+        const readStream = fs.createReadStream(filePath, { encoding: 'utf-8', highWaterMark: 8 });
 
         readStream.on('data', throttledWrite({fn:(chunk) => {
             res.write(`data: ${chunk}\n\n`);
