@@ -29,7 +29,7 @@ const server = http.createServer((req, res) => {
             res.setHeader('Content-Type', 'text/html');
             res.end(data);
         });
-    } else if (req.url === '/stream') {
+    } else if (req.url === '/text_stream') {
         res.writeHead(200, {
             'Content-Type': 'text/event-stream',
             'Cache-Control': 'no-cache',
@@ -61,7 +61,42 @@ const server = http.createServer((req, res) => {
         req.on('close', () => {
             readStream.destroy();
         });
-    } else {
+    }else if (req.url === '/video_stream') {
+        // Path to your video file
+        const filePath = path.join(__dirname, 'streamVideo.mov');
+        const stat = fs.statSync(filePath);
+        const fileSize = stat.size;
+        const range = req.headers.range;
+
+        if (range) {
+            // Parse Range header
+            const parts = range.replace(/bytes=/, "").split("-");
+            const start = parseInt(parts[0], 10);
+            const end = parts[1] 
+                ? parseInt(parts[1], 10)
+                : fileSize - 1;
+
+            const chunkSize = (end - start) + 1;
+            const file = fs.createReadStream(filePath, { start, end });
+            const head = {
+                'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+                'Accept-Ranges': 'bytes',
+                'Content-Length': chunkSize,
+                'Content-Type': 'video/mp4',
+            };
+
+            res.writeHead(206, head);
+            file.pipe(res);
+        } else {
+            const head = {
+                'Content-Length': fileSize,
+                'Content-Type': 'video/mp4',
+            };
+            res.writeHead(200, head);
+            fs.createReadStream(filePath).pipe(res);
+        }
+    }
+     else {
         res.statusCode = 404;
         res.setHeader('Content-Type', 'text/plain');
         res.end('404 Not Found');

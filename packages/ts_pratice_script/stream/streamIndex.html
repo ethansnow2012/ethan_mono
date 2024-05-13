@@ -7,16 +7,20 @@
 </head>
 <body>
     <h1>Welcome to the Streaming Server</h1>
-    <p>Data will appear below:</p>
+    <p>Text stream will appear below:</p>
     <div id="data"></div>
+    <p>Video stream will appear below:</p>
+    <div>
+        <video controls style="width: 200px;">
+            <source src="http://127.0.0.1:3000/video_stream" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
     <script>
         const dataDiv = document.getElementById('data');
-        const source = new EventSource('/stream');
+        const source = new EventSource('/text_stream');
 
         source.onmessage = function(event) {
-            // const message = document.createElement('p');
-            // message.textContent = 
-            //dataDiv.appendChild(message);
             dataDiv.innerHTML += event.data;
         };
 
