@@ -15,6 +15,7 @@ function throttledWrite({readStream, delay, fn}) {
     };
 }
 
+
 const server = http.createServer((req, res) => {
     if (req.url === '/') {
         const filePath = path.join(__dirname, 'streamIndex.html');
@@ -41,7 +42,7 @@ const server = http.createServer((req, res) => {
         const readStream = fs.createReadStream(filePath, { encoding: 'utf-8', highWaterMark: 8 });
 
         readStream.on('data', throttledWrite({fn:(chunk) => {
-            res.write(`data: ${chunk}\n\n`);
+            res.write(`data: ${chunk.replace(/\n/, "\\n")}\n\n`); // preserve change line
         }, readStream, delay: 500} ));
 
         readStream.on('end', () => {
