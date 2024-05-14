@@ -1,0 +1,25 @@
+{
+  "name": "trying_express-zod-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-zod-api": "^19.0.0",
+    "http-errors": "^2.0.0",
+    "typescript": "^5.4.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/http-errors": "^2.0.4",
+    "@types/node": "^20.12.8"
+  }
+}
