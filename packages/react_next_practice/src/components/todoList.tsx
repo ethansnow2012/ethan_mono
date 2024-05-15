@@ -10,7 +10,7 @@ interface Todo {
   }
   
 const TodoList: React.FC = () => {
-    const todos = useSelector((state: RootState) => state.todos.todos);
+    const todos = useSelector((state: RootState) => state.todosStore.todos);
 
     return (
         <div className='flex flex-col gap-2'>

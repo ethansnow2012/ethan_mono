@@ -5,7 +5,7 @@ import todosReducer from './todosSlice';
 
 
 const rootReducer = combineReducers({
-    todos: todosReducer,
+    todosStore: todosReducer,
     // Add other reducers here
   });
 
