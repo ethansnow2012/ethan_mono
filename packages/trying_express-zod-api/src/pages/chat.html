@@ -19,8 +19,9 @@
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button id="send">Send</button>
     </form>
+    <div id="users"></div>
   </div>
-  <div id="users">
+  
 
   </div>
   <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
@@ -53,7 +54,7 @@
         item.textContent = sessionId;
         users.appendChild(item);
     })
-    
+
     socket.on('leave_chat', function({sessionId}) {
         let userElement = document.querySelector(`[data-user='${sessionId}']`);
         if (userElement) {

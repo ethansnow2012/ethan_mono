@@ -18,13 +18,19 @@ const config = createSimpleConfig(
           new_messages: { schema: z.tuple([messageSchema])},
         },
         hooks: {
-            onConnection: async ({ logger, client, all }) => {
-                logger.debug("Connected user", client.id);
-                await all.broadcast("enter_chat", {sessionId: client.id});
+            onStartup: async ({ logger, all }) => {
+                logger.debug("Server started");
+                //logger.debug("All rooms", all.getRooms());
             },
-            onDisconnect: async ({ logger, client, all }) => {
+            onConnection: async ({ logger, client, all, withRooms }) => {
+                await client.join("global_room");
+                logger.debug("All rooms", all.getRooms());
+                await withRooms("global_room").broadcast("enter_chat", {sessionId: client.id});
+            },
+            onDisconnect: async ({ logger, client, all, withRooms }) => {
                 logger.debug("Disconnected user", client.id);
-                await all.broadcast("leave_chat", {sessionId: client.id});
+                await client.leave("global_room");
+                await withRooms("global_room").broadcast("leave_chat", {sessionId: client.id});
             },
         },
       }
@@ -46,8 +52,9 @@ const onMessage = actionsFactory.build({
     input: z.tuple([z.string()]),
     handler: async ({ input, client, withRooms, all }) => {
         console.log("Message received from client:", input);
-        //socketModule.io.emit('message', input); // Broadcast the message to all clients
-        await all.broadcast("new_messages", {msg: input[0]});//Unsupported event new_messages
+        //socketModule.io.emit('message', input); // unwrapped socket.io instance
+        await withRooms("global_room").broadcast("new_messages", {msg: input[0]});
+        await client.emit("new_messages", {msg: input[0]});
     }
 });
 
