@@ -19,7 +19,8 @@
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button id="send">Send</button>
     </form>
-    <div id="users"></div>
+    <div id="users">
+    </div>
   </div>
   
 
@@ -48,10 +49,28 @@
       window.scrollTo(0, document.body.scrollHeight);
     });
 
+    socket.on('connect', function () {
+        console.log('Connected to the server');
+        let item = document.createElement('div');
+        item.textContent = `You have connected to the chat`;
+        users.appendChild(item);
+
+        // Request current room context
+        socket.emit('get_room_context');
+    });
+    socket.on('return_current_room_context', function (usersInRoom) {
+        users.innerHTML = ''; // Clear current user list
+        usersInRoom.forEach(user => {
+            let item = document.createElement('div');
+            item.dataset.user = user.sessionId;
+            item.textContent = `User in the Room: ${user.sessionId}`;
+            users.appendChild(item);
+        });
+    });
     socket.on('enter_chat', function({sessionId}) {
         let item = document.createElement('div');
         item.dataset.user = sessionId;
-        item.textContent = sessionId;
+        item.textContent = `User in the Room: ${sessionId}`;
         users.appendChild(item);
     })
 
