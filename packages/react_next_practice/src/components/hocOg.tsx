@@ -5,7 +5,7 @@ interface HocOgProps {
   otherProp: string;
 }
 
-const HocOg: React.FC<HocOgProps> = ({ extraProp, otherProp}) => {
+const HocOg: React.FC<HocOgProps> = ({ extraProp, otherProp }) => {
   return (
     <div>
         <div>og showing extra prop: {extraProp}</div>
