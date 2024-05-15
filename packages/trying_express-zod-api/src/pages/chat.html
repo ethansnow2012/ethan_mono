@@ -21,36 +21,27 @@
     </form>
   </div>
 
-  <!-- <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script> -->
+  <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
   <script>
-    // Create WebSocket connection.
-    const socket = new WebSocket("ws://localhost:8080/socket.io/?EIO=4&transport=polling");
+    var socket = io('http://localhost:8080'); // Connect to the Socket.IO server
 
-    // Connection opened
-    socket.addEventListener("open", (event) => {
-      console.log("Connected to WebSocket server111");
-      socket.send("Hello Server!");
-    });
-
-    // Listen for messages
-    socket.addEventListener("message", (event) => {
-      console.log("Message from server ", event.data);
-
-      const item = document.createElement('li');
-      item.textContent = event.data;
-      document.getElementById('messages').appendChild(item);
-      window.scrollTo(0, document.body.scrollHeight);
-    });
-
-    const form = document.getElementById('form');
-    const input = document.getElementById('input');
+    var form = document.getElementById('form');
+    var input = document.getElementById('input');
+    var messages = document.getElementById('messages');
 
     form.addEventListener('submit', function(event) {
       event.preventDefault();
       if (input.value) {
-        socket.send(input.value);
+        socket.emit('message', input.value);
         input.value = '';
       }
+    });
+
+    socket.on('new_messages', function({msg}) {
+      var item = document.createElement('li');
+      item.textContent = msg;
+      messages.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight);
     });
   </script>
 </body>
