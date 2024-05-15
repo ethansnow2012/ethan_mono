@@ -20,14 +20,17 @@
       <input id="input" autocomplete="off" /><button id="send">Send</button>
     </form>
   </div>
+  <div id="users">
 
+  </div>
   <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
   <script>
-    var socket = io('http://localhost:8080'); // Connect to the Socket.IO server
+    let socket = io('http://localhost:8080'); // Connect to the Socket.IO server
 
-    var form = document.getElementById('form');
-    var input = document.getElementById('input');
-    var messages = document.getElementById('messages');
+    let form = document.getElementById('form');
+    let input = document.getElementById('input');
+    let messages = document.getElementById('messages');
+    let users = document.getElementById('users');
 
     form.addEventListener('submit', function(event) {
       event.preventDefault();
@@ -36,13 +39,28 @@
         input.value = '';
       }
     });
-
+    // ingress
     socket.on('new_messages', function({msg}) {
-      var item = document.createElement('li');
+      let item = document.createElement('li');
       item.textContent = msg;
       messages.appendChild(item);
       window.scrollTo(0, document.body.scrollHeight);
     });
+
+    socket.on('enter_chat', function({sessionId}) {
+        let item = document.createElement('div');
+        item.dataset.user = sessionId;
+        item.textContent = sessionId;
+        users.appendChild(item);
+    })
+    
+    socket.on('leave_chat', function({sessionId}) {
+        let userElement = document.querySelector(`[data-user='${sessionId}']`);
+        if (userElement) {
+            userElement.remove();
+        }
+    })
+    
   </script>
 </body>
 </html>
