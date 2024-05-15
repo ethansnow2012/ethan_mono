@@ -4,6 +4,7 @@ import { authMiddleware } from "./middleware";
 import { withErrorHandleWrapper } from "./errors";
 
 
+
 export const helloWorldEndpoint = defaultEndpointsFactory.build({
   method: "get", 
   input: z.object({

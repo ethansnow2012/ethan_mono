@@ -7,6 +7,7 @@ import {
 
 
 export const routing: Routing = {
+  //"":indexPage,
   v1: {
     hello: helloWorldEndpoint,
     authByKey: authNeededEndpoint,
