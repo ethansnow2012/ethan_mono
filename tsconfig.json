@@ -8,11 +8,14 @@
       "moduleResolution": "node",
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
       "baseUrl": ".",
+      "moduleDetection":"force",
       "paths": {
         "@monorepo/*": ["packages/*/src"]
       },
-      "outDir": "./dist"
+      // "outDir": "./dist"
     },
-    "include": ["./*.ts"]
+    // "include": ["./*.ts"]
 }
