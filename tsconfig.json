@@ -1,11 +1,18 @@
 {
     "compilerOptions": {
-        "moduleResolution": "node",  // or "nodenext" if using ES modules extensively
-        "target": "es6",               // Compile to ES6
-        "baseUrl": ".",
-        "paths": {
-            "@monorepo/*": ["packages/*/src"]
-        }
-    }
+      "target": "ES6",
+      "module": "commonjs",
+      "strict": true,
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "moduleResolution": "node",
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "baseUrl": ".",
+      "paths": {
+        "@monorepo/*": ["packages/*/src"]
+      },
+      "outDir": "./dist"
+    },
+    "include": ["./*.ts"]
 }
-

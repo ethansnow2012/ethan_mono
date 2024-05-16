@@ -127,7 +127,14 @@ importers:
         specifier: ^20.12.8
         version: 20.12.11
 
-  packages/ts_pratice_script: {}
+  packages/ts_pratice_script:
+    dependencies:
+      '@types/express':
+        specifier: ^4.17.21
+        version: 4.17.21
+      express:
+        specifier: ^4.19.2
+        version: 4.19.2
 
   packages/using_core:
     dependencies:
