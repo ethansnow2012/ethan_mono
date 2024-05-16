@@ -1,12 +1,32 @@
 // /Decorator.ts
 import "reflect-metadata"
-// 類裝飾器 type 1
+// 類別裝飾器 type 1: 封裝
 const sealed: ClassDecorator = (target) => {
   Object.seal(target)
   Object.seal(target.prototype)
 }
+// 類別裝飾器 type 2: 複寫 constructor 並加上新的方法
+function trackInstances<T extends { new (...args: any[]): {} }>(constructor: T) {
+  let instanceCount = 0
 
-// 屬性裝飾器
+  return class extends constructor {
+    constructor(...args: any[]) {
+      super(...args)
+      instanceCount++
+      console.log("Instance count: ", instanceCount)
+    }
+
+    randomConsole() {
+      console.log("randomConsole")
+    }
+
+    static getInstanceCount() {
+      return instanceCount
+    }
+  }
+}
+
+// 屬性裝飾器 overwrite getter and setter
 const format = function (formatString: string): PropertyDecorator {
   return function (target: any, propertyKey: string | symbol): void {
     let value: string
@@ -68,6 +88,7 @@ function validate(target: any, propertyName: string, descriptor: TypedPropertyDe
 }
 
 @sealed
+@trackInstances
 class Example {
   @format("Mr.")
   name: string
@@ -87,10 +108,14 @@ const example = new Example("John Doe")
 console.log(example.name) // Output: Mr. John Doe
 console.log(example.greet("World")) // Output: greet executed in Xms
 
+console.log("--------")
 try {
-  console.log("--")
   // @ts-ignore
   example.greet()
 } catch (error) {
   console.log("error caught") // Output: Missing required argument.
 }
+console.log("--------")
+const example2 = new Example("Jon Snow")
+console.log(Example as any)
+;(example2 as typeof example2 & { randomConsole: () => void }).randomConsole()
