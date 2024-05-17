@@ -44,13 +44,7 @@ importers:
         specifier: ^0.164.1
         version: 0.164.1
 
-  packages/core:
-    dependencies:
-      hello-world-npm:
-        specifier: ^1.1.1
-        version: 1.1.1
-
-  packages/react_next_practice:
+  apps/react_next_practice:
     dependencies:
       '@reduxjs/toolkit':
         specifier: ^2.2.4
@@ -93,7 +87,7 @@ importers:
         specifier: ^5
         version: 5.4.5
 
-  packages/trying_express-zod-api_with-socket-chat:
+  apps/trying_express-zod-api_with-socket-chat:
     dependencies:
       express:
         specifier: ^4.19.2
@@ -127,7 +121,7 @@ importers:
         specifier: ^20.12.8
         version: 20.12.11
 
-  packages/ts_pratice_script:
+  apps/ts_pratice_script:
     dependencies:
       '@types/express':
         specifier: ^4.17.21
@@ -138,6 +132,12 @@ importers:
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
+
+  packages/core:
+    dependencies:
+      hello-world-npm:
+        specifier: ^1.1.1
+        version: 1.1.1
 
   packages/using_core:
     dependencies:
