@@ -25,3 +25,12 @@ const MyContextStateProvider = ({ children }: { children: React.ReactNode }) => 
 }
 
 export { MyContextStateProvider, useMyContextState }
+
+/*
+1. define the state type
+2. define the context type
+3. define initial state via state type
+4. invoke createContext somewhere
+5. wrap the provider "with the actual state"
+6. wrap the useContext tobe custom context
+*/
