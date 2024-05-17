@@ -1,9 +1,12 @@
-//import Image from "next/image";
+import PlayGround from "@/components/playGround";
 
 export default function Page() {
   return (
-    <div>
-        DummyPage here
-    </div>
+    <>
+      <div>DummyPage here</div>
+      <div>
+        <PlayGround />
+      </div>
+    </>
   );
 }
