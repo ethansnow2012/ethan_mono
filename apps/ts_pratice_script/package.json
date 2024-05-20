@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "run_utils": "ts-node ./utils/index.ts",
     "express_server_error": "ts-node-dev --respawn --transpile-only ./expressServerWithErrorHandleAndZod/server.ts",
     "ts_many_decorator": "ts-node ./experimental/manyDecorator.ts",
     "ts_function_decorator": "ts-node ./experimental/alike/functionDecorator.ts",
