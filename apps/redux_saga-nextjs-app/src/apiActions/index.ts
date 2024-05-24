@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:4000/todos"
+const BASE_URL = "http://localhost:3001/api/todos"
 
 export interface Todo {
   id: number
@@ -7,17 +7,7 @@ export interface Todo {
   done: boolean
 }
 
-export const getTodos = async (): Promise<Todo[]> => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve([
-        { id: 1, text: "Buy milk", active: true, done: false },
-        { id: 2, text: "Buy eggs", active: true, done: false },
-        { id: 3, text: "Buy bread", active: true, done: false },
-      ])
-    }, 1000)
-  })
-}
+export const getTodos = async (): Promise<Todo[]> => fetch(`${BASE_URL}`).then((res) => res.json())
 
 export const createTodo = async (text: string): Promise<Todo> =>
   fetch(`${BASE_URL}`, {

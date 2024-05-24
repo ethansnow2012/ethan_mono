@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from "redux"
 import createSagaMiddleware from "@redux-saga/core"
-import { Todo, getTodos, updateTodo, deleteTodo, createTodo } from "../api"
+import { Todo, getTodos, updateTodo, deleteTodo, createTodo } from "../apiActions"
 import { put, takeEvery } from "redux-saga/effects"
 
 function* getTodosAction() {
