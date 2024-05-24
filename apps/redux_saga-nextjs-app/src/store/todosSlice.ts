@@ -1,55 +1,28 @@
-import { get } from "http"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import type { Todo } from "../types"
-import { createSlice } from "@reduxjs/toolkit"
 
-//   const reducer = (state: Todo[] = [], action: { type: "TODOS_FETCH_SUCCEEDED"; payload: Todo[] }) => {
-//     switch (action.type) {
-//       case "TODOS_FETCH_SUCCEEDED":
-//         return action.payload
-//       default:
-//         return state
-//     }
-//   }
-
-// export const selectTodos = (state: Todo[]) => state
-
-// export const fetchTodos = () => ({ type: "TODOS_FETCH_REQUESTED" })
-// export const toggleTodo = (todo: Todo) => ({
-//   type: "UPDATE_TODO_REQUESTED",
-//   payload: {
-//     ...todo,
-//     done: !todo.done,
-//   },
-// })
-// export const removeTodo = (todo: Todo) => ({
-//   type: "DELETE_TODO_REQUESTED",
-//   payload: todo,
-// })
-// export const addTodo = (text: string) => ({
-//   type: "CREATE_TODO_REQUESTED",
-//   payload: text,
-// })
+const initialState: Todo[] = [{ id: 1, text: "Learn React", done: true, active: true }]
 
 export const todosSlice = createSlice({
   name: "todos",
-  initialState: [
-    {
-      id: 1,
-      text: "Learn React",
-      done: false,
-    },
-    {
-      id: 2,
-      text: "Learn Redux",
-      done: false,
-    },
-    {
-      id: 3,
-      text: "Learn Redux-Saga",
-      done: false,
-    },
-  ],
+  initialState,
   reducers: {
-    getTodos: (state) => state,
+    //getTodos: (state) => state,
+    todosFetchSucceeded: (state, action: PayloadAction<Todo[]>) => {
+      return action.payload
+    },
+    addTodo: (state, action: PayloadAction<Todo>) => {
+      console.log("addTodo:", action.payload)
+      state.push(action.payload)
+    },
+    toggleTodo: (state, action: PayloadAction<number>) => {
+      const todo = state.find((todo) => todo.id === action.payload)
+      if (todo) {
+        todo.done = !todo.done
+      }
+    },
   },
 })
+export const fetchTodos = () => ({ type: "TODOS_FETCH_REQUESTED" })
+
+export const { addTodo, toggleTodo, todosFetchSucceeded } = todosSlice.actions

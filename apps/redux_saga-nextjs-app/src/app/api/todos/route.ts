@@ -7,7 +7,7 @@ interface Todo {
   done: boolean
 }
 
-let todos: Todo[] = []
+let todos: Todo[] = [{ id: 2, text: "Learn React(from api)", done: true, active: true }]
 
 export async function GET() {
   return NextResponse.json(todos)

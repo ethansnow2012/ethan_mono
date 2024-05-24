@@ -28,3 +28,5 @@ function* rootSaga() {
   yield takeEvery("DELETE_TODO_REQUESTED", deleteTodoAction)
   yield takeEvery("CREATE_TODO_REQUESTED", createTodoAction)
 }
+
+export default rootSaga
