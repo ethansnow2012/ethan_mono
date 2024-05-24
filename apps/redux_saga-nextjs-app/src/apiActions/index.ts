@@ -1,11 +1,6 @@
-const BASE_URL = "http://localhost:3001/api/todos"
+import { Todo } from "../types"
 
-export interface Todo {
-  id: number
-  text: string
-  active: boolean
-  done: boolean
-}
+const BASE_URL = "http://localhost:3001/todos"
 
 export const getTodos = async (): Promise<Todo[]> => fetch(`${BASE_URL}`).then((res) => res.json())
 
