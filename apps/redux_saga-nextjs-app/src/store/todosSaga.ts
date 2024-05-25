@@ -1,10 +1,10 @@
 import type { Todo, TypedResponse } from "@/types"
 import { getTodos, createTodo, updateTodo, deleteTodo } from "@/apiActions"
-import { put, takeEvery, takeLatest } from "redux-saga/effects"
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects"
 import { todosPiping } from "./todosSlice"
 
 function* getTodosAction() {
-  const { data: todos } = yield getTodos() //: TypedResponse<Todo[]>
+  const { data: todos } = yield call(getTodos)
   yield put(todosPiping.todosFetchSucceeded(todos as Todo[]))
 }
 
