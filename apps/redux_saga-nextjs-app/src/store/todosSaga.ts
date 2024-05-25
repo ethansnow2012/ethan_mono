@@ -49,3 +49,11 @@ function* rootSaga() {
 }
 
 export default rootSaga
+
+export const todosSagaActions = {
+  getTodosAction,
+  createTodoAction,
+  updateTodoAction,
+  deleteTodoAction,
+  clearError,
+}
