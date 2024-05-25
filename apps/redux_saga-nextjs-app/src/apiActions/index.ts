@@ -16,7 +16,7 @@ export const createTodo = async (text: string): Promise<Todo> =>
   }).then((res) => res.json())
 
 export const updateTodo = async (todo: Todo): Promise<Todo> =>
-  fetch(`${BASE_URL}/${todo.id}`, {
+  fetch(`${BASE_URL}?id=${todo.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -25,6 +25,10 @@ export const updateTodo = async (todo: Todo): Promise<Todo> =>
   }).then((res) => res.json())
 
 export const deleteTodo = async (todo: Todo): Promise<Todo> =>
-  fetch(`${BASE_URL}/${todo.id}`, {
+  fetch(`${BASE_URL}?id=${todo.id}`, {
     method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(todo),
   }).then(() => todo)

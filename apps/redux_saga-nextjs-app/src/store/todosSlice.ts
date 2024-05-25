@@ -7,10 +7,7 @@ export const todosSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
-    //getTodos: (state) => state,
-    todosFetchSucceeded: (state, action: PayloadAction<Todo[]>) => {
-      return action.payload
-    },
+    //TODOS_FETCH_SUCCEEDED
     addTodo: (state, action: PayloadAction<Todo>) => {
       console.log("addTodo:", action.payload)
       state.push(action.payload)
@@ -21,8 +18,16 @@ export const todosSlice = createSlice({
         todo.done = !todo.done
       }
     },
+    todosFetchSucceeded: (state, action: PayloadAction<Todo[]>) => {
+      console.log("todosFetchSucceeded:", action.payload)
+      return action.payload
+    },
   },
 })
 export const fetchTodos = () => ({ type: "TODOS_FETCH_REQUESTED" })
 
-export const { addTodo, toggleTodo, todosFetchSucceeded } = todosSlice.actions
+export const { addTodo, toggleTodo } = todosSlice.actions
+
+export const todosPiping = {
+  todosFetchSucceeded: todosSlice.actions.todosFetchSucceeded,
+}

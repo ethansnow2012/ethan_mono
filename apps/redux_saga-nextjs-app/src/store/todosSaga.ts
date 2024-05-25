@@ -1,10 +1,11 @@
 import type { Todo } from "../types"
 import { getTodos, createTodo, updateTodo, deleteTodo } from "@/apiActions"
 import { put, takeEvery } from "redux-saga/effects"
+import { todosPiping } from "./todosSlice"
 
 function* getTodosAction() {
   const todos: Todo[] = yield getTodos()
-  yield put({ type: "TODOS_FETCH_SUCCEEDED", payload: todos })
+  yield put(todosPiping.todosFetchSucceeded(todos))
 }
 
 function* createTodoAction({ payload }: { type: "CREATE_TODO_REQUESTED"; payload: string }) {
