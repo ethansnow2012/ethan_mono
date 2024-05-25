@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useCallback } from "react"
-import { Provider, useSelector, useDispatch } from "react-redux"
-//import { store, selectTodos, fetchTodos, toggleTodo, removeTodo, addTodo } from "../store"
+import React from "react"
 import TodoApp from "@/components/TodoApp"
 
 export default function Home() {
