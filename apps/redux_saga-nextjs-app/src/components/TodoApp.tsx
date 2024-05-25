@@ -18,21 +18,25 @@ export default function () {
   }
   return (
     <div className="App">
-      <div className="todos">
+      {/* <div className="filter"></div> */}
+      <div className="border-solid border-2 border-indigo-600 w-[375px] todos">
         {todos?.map((todo) => (
-          <React.Fragment key={todo.id}>
-            <div>
+          <div key={todo.id} className="flex">
+            <div className="mr-auto">
               <input
                 type="checkbox"
                 checked={todo.done}
                 onChange={() => {
-                  dispatch({ type: "UPDATE_TODO_REQUESTED", payload: {target: { ...todo, done: !todo.done }, og:{...todo}} })
+                  dispatch({
+                    type: "UPDATE_TODO_REQUESTED",
+                    payload: { target: { ...todo, done: !todo.done }, og: { ...todo } },
+                  })
                 }}
               />
               <span>{todo.text}</span>
             </div>
             <button onClick={() => dispatch({ type: "DELETE_TODO_REQUESTED", payload: { ...todo } })}>Delete</button>
-          </React.Fragment>
+          </div>
         ))}
       </div>
       <div className="add">
