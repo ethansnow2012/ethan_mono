@@ -26,7 +26,7 @@ export default function () {
                 type="checkbox"
                 checked={todo.done}
                 onChange={() => {
-                  dispatch({ type: "UPDATE_TODO_REQUESTED", payload: { ...todo, done: !todo.done } })
+                  dispatch({ type: "UPDATE_TODO_REQUESTED", payload: {target: { ...todo, done: !todo.done }, og:{...todo}} })
                 }}
               />
               <span>{todo.text}</span>

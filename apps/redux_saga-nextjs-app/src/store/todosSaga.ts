@@ -1,11 +1,11 @@
-import type { Todo } from "../types"
+import type { Todo, TypedResponse } from "@/types"
 import { getTodos, createTodo, updateTodo, deleteTodo } from "@/apiActions"
-import { put, takeEvery } from "redux-saga/effects"
+import { put, takeEvery, takeLatest } from "redux-saga/effects"
 import { todosPiping } from "./todosSlice"
 
 function* getTodosAction() {
-  const todos: Todo[] = yield getTodos()
-  yield put(todosPiping.todosFetchSucceeded(todos))
+  const { data: todos } = yield getTodos() //: TypedResponse<Todo[]>
+  yield put(todosPiping.todosFetchSucceeded(todos as Todo[]))
 }
 
 function* createTodoAction({ payload }: { type: "CREATE_TODO_REQUESTED"; payload: string }) {
@@ -13,9 +13,19 @@ function* createTodoAction({ payload }: { type: "CREATE_TODO_REQUESTED"; payload
   yield put({ type: "TODOS_FETCH_REQUESTED" })
 }
 
-function* updateTodoAction({ payload }: { type: "UPDATE_TODO_REQUESTED"; payload: Todo }) {
-  yield updateTodo(payload)
-  yield put({ type: "TODOS_FETCH_REQUESTED" })
+// spliting procedure
+function* updateTodoAction({ payload }: { type: "UPDATE_TODO_REQUESTED"; payload: { target: Todo; og: Todo } }) {
+  const { target, og } = payload
+  try {
+    yield put(todosPiping.optimalUpdateTodo(target))
+    const { status }: { status: number } = yield updateTodo(target)
+    if (status !== 200) {
+      throw new Error("Failed to update todo")
+    }
+    yield put({ type: "TODOS_FETCH_REQUESTED" })
+  } catch (e) {
+    yield put(todosPiping.optimalUpdateTodo(og))
+  }
 }
 
 function* deleteTodoAction({ payload }: { type: "DELETE_TODO_REQUESTED"; payload: Todo }) {
@@ -25,9 +35,9 @@ function* deleteTodoAction({ payload }: { type: "DELETE_TODO_REQUESTED"; payload
 
 function* rootSaga() {
   yield takeEvery("TODOS_FETCH_REQUESTED", getTodosAction)
-  yield takeEvery("UPDATE_TODO_REQUESTED", updateTodoAction)
-  yield takeEvery("DELETE_TODO_REQUESTED", deleteTodoAction)
   yield takeEvery("CREATE_TODO_REQUESTED", createTodoAction)
+  yield takeLatest("UPDATE_TODO_REQUESTED", updateTodoAction)
+  yield takeLatest("DELETE_TODO_REQUESTED", deleteTodoAction)
 }
 
 export default rootSaga

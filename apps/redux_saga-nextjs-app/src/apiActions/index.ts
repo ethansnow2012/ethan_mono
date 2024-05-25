@@ -2,10 +2,19 @@ import { Todo } from "../types"
 
 const BASE_URL = "http://localhost:3000/api/todos"
 
-export const getTodos = async (): Promise<Todo[]> => fetch(`${BASE_URL}`).then((res) => res.json())
+const handleResponse = async <T = undefined>(response: Response) => {
+  const data = await response.json()
+  return { status: response.status, data: data as T }
+}
+export type TypedResponse<T> = ReturnType<typeof handleResponse<T>>
 
-export const createTodo = async (text: string): Promise<Todo> =>
-  fetch(`${BASE_URL}`, {
+export const getTodos = async () => {
+  const response = await fetch(`${BASE_URL}`)
+  return handleResponse<Todo[]>(response)
+}
+
+export const createTodo = async (text: string) => {
+  const response = await fetch(`${BASE_URL}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -13,22 +22,27 @@ export const createTodo = async (text: string): Promise<Todo> =>
     body: JSON.stringify({
       text,
     }),
-  }).then((res) => res.json())
+  })
+  return handleResponse<Todo>(response)
+}
 
-export const updateTodo = async (todo: Todo): Promise<Todo> =>
-  fetch(`${BASE_URL}?id=${todo.id}`, {
+export const updateTodo = async (todo: Todo) => {
+  const response = await fetch(`${BASE_URL}?id=${todo.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(todo),
-  }).then((res) => res.json())
+  })
+  return handleResponse<Todo>(response)
+}
 
-export const deleteTodo = async (todo: Todo): Promise<Todo> =>
-  fetch(`${BASE_URL}?id=${todo.id}`, {
+export const deleteTodo = async (todo: Todo) => {
+  const response = await fetch(`${BASE_URL}?id=${todo.id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(todo),
-  }).then(() => todo)
+  })
+  return handleResponse<undefined>(response)
+}

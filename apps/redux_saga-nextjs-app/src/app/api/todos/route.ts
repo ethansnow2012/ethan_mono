@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     done: false,
   }
   db.todos.push(newTodo)
-  await sleep(3000) // mimic lag
+  await sleep(500) // mimic lag
   return NextResponse.json(newTodo, { status: 201 })
 }
 
@@ -47,7 +47,14 @@ export async function PUT(req: NextRequest) {
   const guardedError = reqGuard({ req, todo: updatedTodo, id })
   if (guardedError) return guardedError()
 
-  await sleep(3000) // mimic lag
+  await sleep(500) // mimic lag
+
+  if (Math.random() < 0.25) {
+    return new NextResponse(JSON.stringify({ error: "Bad luck. :)" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    })
+  }
 
   db.todos = db.todos.map((todo) => (todo.id === updatedTodo.id ? { ...todo, ...updatedTodo } : todo))
   return NextResponse.json(updatedTodo)
