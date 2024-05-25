@@ -8,10 +8,18 @@ export default function () {
   const textRef = useRef<HTMLInputElement>(null)
   const todos = useSelector((state: RootState) => state.todosSlice.sliceData)
   const loading = useSelector((state: RootState) => state.todosSlice.loading)
+  const error = useSelector((state: RootState) => state.todosSlice.error)
 
   useEffect(() => {
     dispatch({ type: "TODOS_FETCH_REQUESTED" })
   }, [])
+
+  useEffect(() => {
+    if (error) {
+      console.log("Error happened.") // use toast here
+      dispatch({ type: "CONSUME_ERROR" })
+    }
+  }, [error])
 
   const onAdd = () => {
     dispatch({ type: "CREATE_TODO_REQUESTED", payload: textRef.current!.value })
@@ -21,7 +29,7 @@ export default function () {
     <div className="App">
       {/* <div className="filter"></div> */}
       <div className="border-solid border-2 border-indigo-600 w-[375px] todos">
-        {loading&&todos.length==0 ? (
+        {loading && todos.length == 0 ? (
           <div>loading...</div>
         ) : (
           todos?.map((todo) => (
@@ -48,6 +56,7 @@ export default function () {
         <input type="text" ref={textRef} />
         <button onClick={onAdd}>Add</button>
       </div>
+      <div>Error:{error && <div>{error}</div>}</div>
     </div>
   )
 }

@@ -19,13 +19,14 @@ function* updateTodoAction({ payload }: { type: "UPDATE_TODO_REQUESTED"; payload
   const { target, og } = payload
   try {
     yield put(todosPiping.optimalUpdateTodo(target))
-    const { status }: { status: number } = yield updateTodo(target)
+    const { status }: { status: number } = yield call(updateTodo, target)
     if (status !== 200) {
       throw new Error("Failed to update todo")
     }
     yield put({ type: "TODOS_FETCH_REQUESTED" })
-  } catch (e) {
+  } catch (e: any) {
     yield put(todosPiping.optimalUpdateTodo(og))
+    yield put(todosPiping.todosFetchFailed(e.message ?? ("" as string)))
   }
 }
 
@@ -34,11 +35,17 @@ function* deleteTodoAction({ payload }: { type: "DELETE_TODO_REQUESTED"; payload
   yield put({ type: "TODOS_FETCH_REQUESTED" })
 }
 
+function* clearError({}: { type: "CLEAR_ERROR" }) {
+  console.log("CLEAR_ERROR")
+  yield put(todosPiping.todosClearError())
+}
+
 function* rootSaga() {
   yield takeEvery("TODOS_FETCH_REQUESTED", getTodosAction)
   yield takeEvery("CREATE_TODO_REQUESTED", createTodoAction)
   yield takeLatest("UPDATE_TODO_REQUESTED", updateTodoAction)
   yield takeLatest("DELETE_TODO_REQUESTED", deleteTodoAction)
+  yield takeEvery("CONSUME_ERROR", clearError)
 }
 
 export default rootSaga
