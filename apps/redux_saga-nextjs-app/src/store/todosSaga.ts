@@ -4,6 +4,7 @@ import { call, put, takeEvery, takeLatest } from "redux-saga/effects"
 import { todosPiping } from "./todosSlice"
 
 function* getTodosAction() {
+  yield put(todosPiping.startFetchingTodos())
   const { data: todos } = yield call(getTodos)
   yield put(todosPiping.todosFetchSucceeded(todos as Todo[]))
 }

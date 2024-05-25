@@ -23,6 +23,7 @@ const reqGuard = ({ req, todo, id }: { req: NextRequest; todo?: Todo; id?: numbe
 }
 
 export async function GET() {
+  await sleep(500) // mimic lag
   return NextResponse.json(db.todos)
 }
 

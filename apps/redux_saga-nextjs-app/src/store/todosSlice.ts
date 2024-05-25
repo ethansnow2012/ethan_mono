@@ -1,17 +1,38 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import type { Todo } from "../types"
+import { start } from "repl"
+
+interface TodosSliceState {
+  sliceData: Todo[]
+  loading: boolean
+}
+
+const initialState: TodosSliceState = {
+  sliceData: [],
+  loading: false,
+}
 
 export const todosSlice = createSlice({
   name: "todos",
-  initialState: [] as Todo[],
+  initialState,
   reducers: {
-    todosFetchSucceeded: (state, action: PayloadAction<Todo[]>) => {
-      return action.payload
+    startFetchingTodos: (state) => {
+      return {
+        ...state,
+        loading: true,
+      }
     },
-    optimalUpdateTodo: (state, action: PayloadAction<Todo>) => {
-      const index = state.findIndex((todo) => todo.id === action.payload.id)
+    todosFetchSucceeded: (state, action: PayloadAction<Todo[]>) => {
+      return {
+        ...state,
+        loading: false,
+        sliceData: action.payload,
+      }
+    },
+    optimalUpdateTodo: ({ sliceData }, action: PayloadAction<Todo>) => {
+      const index = sliceData.findIndex((todo) => todo.id === action.payload.id)
       if (index !== -1) {
-        state[index] = { ...state[index], ...action.payload }
+        sliceData[index] = { ...sliceData[index], ...action.payload }
       }
     },
   },
