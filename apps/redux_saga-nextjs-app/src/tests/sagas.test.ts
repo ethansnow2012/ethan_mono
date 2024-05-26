@@ -1,28 +1,32 @@
 import { expectSaga } from "redux-saga-test-plan"
 import { call } from "redux-saga/effects"
-import { getTodos } from "@/apiActions"
-import { todosSagaActions } from "@/store/todosSaga"
-import { todosPiping } from "@/store/todosSlice"
-import type { Todo, TypedResponse } from "@/types"
+import { getTodos } from "../apiActions"
+import { todosSagaActions } from "../store/todosSaga"
+import { todosPiping } from "../store/todosSlice"
+import type { Todo, TypedResponse } from "../types"
 import { test } from "node:test"
-import assert from "assert"
+import { db } from "@/data/todoDb"
 
-// Mock data
-// const mockTodos: Todo[] = [
-//   { id: 1, text: "Learn Redux Saga", done: false },
-//   { id: 2, text: "Learn Testing", done: true }
-// ];
-
-// // Mock API response
-const initTodos: Todo[] = [{ id: 1, text: "Learn React", done: true, active: true }]
-const mockApiResponse: Awaited<TypedResponse<Todo[]>> = {
+const fetchResponseSnapShot: Awaited<TypedResponse<Todo[]>> = {
   status: 200,
-  data: initTodos,
+  data: db.todos,
 }
 
-test("getTodosAction success", async () => {
+test("getTodosAction success(mock api)", async () => {
+  const mockInitTodos: Todo[] = [{ id: 1, text: "Learn React", done: true, active: true }]
+  const mockApiResponse: Awaited<TypedResponse<Todo[]>> = {
+    status: 200,
+    data: mockInitTodos,
+  }
   await expectSaga(todosSagaActions.getTodosAction)
     .provide([[call(getTodos), mockApiResponse]])
-    .put({ type: "todos/startFetchingTodos" })
+    .put(todosPiping.todosFetchSucceeded(mockInitTodos))
+    .run()
+})
+test("getTodosAction success(actual api)", async () => {
+  await expectSaga(todosSagaActions.getTodosAction)
+    .provide([[call(getTodos), fetchResponseSnapShot]])
+    .put(todosPiping.startFetchingTodos())
+    .put(todosPiping.todosFetchSucceeded(fetchResponseSnapShot.data))
     .run()
 })

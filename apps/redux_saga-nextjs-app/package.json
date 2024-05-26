@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:saga": "ts-node src/tests/saga.test.ts"
+    "test:saga": "ts-node -r tsconfig-paths/register --project tsconfig.test.json ./src/tests/sagas.test.ts"
   },
   "dependencies": {
     "@redux-saga/core": "^1.3.0",
@@ -31,6 +31,8 @@
     "postcss": "^8",
     "redux-saga-test-plan": "^4.0.6",
     "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5"
   }
 }
