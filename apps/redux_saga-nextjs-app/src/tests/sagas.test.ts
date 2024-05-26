@@ -1,7 +1,7 @@
 import { expectSaga } from "redux-saga-test-plan"
 import { call } from "redux-saga/effects"
 import { getTodos, updateTodo } from "@/apiActions"
-import { todosSagaActions } from "@/store/todosSaga"
+import { todosSagaActions } from "@/store/sagas/todosSaga"
 import { todosPiping } from "@/store/todosSlice"
 import type { Todo, TypedResponse } from "@/types"
 import { test } from "node:test"
