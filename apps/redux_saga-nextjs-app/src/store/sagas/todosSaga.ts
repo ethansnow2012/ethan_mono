@@ -36,7 +36,6 @@ function* deleteTodoAction({ payload }: { type: "DELETE_TODO_REQUESTED"; payload
 }
 
 function* clearError({}: { type: "CLEAR_ERROR" }) {
-  console.log("CLEAR_ERROR")
   yield put(todosPiping.todosClearError())
 }
 

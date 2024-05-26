@@ -1,12 +1,14 @@
 import createSagaMiddleware from "@redux-saga/core"
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
 import { todosSlice } from "./todosSlice"
-import rootSaga from "./sagas/todosSaga"
+import { counterSlice } from "./counterSlice"
+import rootSaga from "./sagas"
 
 const sagaMiddleware = createSagaMiddleware()
 
 const rootReducer = combineReducers({
   todosSlice: todosSlice.reducer,
+  counterSlice: counterSlice.reducer,
 })
 
 export type RootState = ReturnType<typeof store.getState>
