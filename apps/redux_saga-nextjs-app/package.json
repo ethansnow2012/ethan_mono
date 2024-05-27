@@ -9,7 +9,7 @@
     "start": "next start",
     "start:with_socket": "NODE_ENV=production ts-node --project tsconfig.socket.json ./src/server.ts",
     "lint": "next lint",
-    "test:saga": "ts-node -r tsconfig-paths/register --project tsconfig.test.json ./src/tests/*.test.ts"
+    "test:saga": "ts-node -r tsconfig-paths/register --project tsconfig.test.json ./src/tests/run.ts"
   },
   "dependencies": {
     "@redux-saga/core": "^1.3.0",
