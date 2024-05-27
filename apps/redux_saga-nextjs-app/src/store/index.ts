@@ -1,7 +1,7 @@
 import createSagaMiddleware from "@redux-saga/core"
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
-import { todosSlice } from "./todosSlice"
-import { counterSlice } from "./counterSlice"
+import { todosSlice } from "./slices/todosSlice"
+import { counterSlice } from "./slices/counterSlice"
 import rootSaga from "./sagas"
 
 const sagaMiddleware = createSagaMiddleware()

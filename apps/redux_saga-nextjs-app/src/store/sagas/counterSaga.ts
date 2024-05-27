@@ -1,5 +1,5 @@
 import { call, put, takeEvery, takeLatest, select, take, delay, spawn, fork } from "redux-saga/effects"
-import { counterPiping } from "../counterSlice"
+import { counterPiping } from "../slices/counterSlice"
 
 interface RootState {
   counterSlice: {

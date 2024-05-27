@@ -1,7 +1,7 @@
 import type { Todo, TypedResponse } from "@/types"
 import { getTodos, createTodo, updateTodo, deleteTodo } from "@/apiActions"
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects"
-import { todosPiping } from "../todosSlice"
+import { todosPiping } from "../slices/todosSlice"
 
 function* getTodosAction() {
   yield put(todosPiping.startFetchingTodos())
