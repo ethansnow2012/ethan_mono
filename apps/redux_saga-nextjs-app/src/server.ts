@@ -1,6 +1,7 @@
 import { createServer } from "node:http"
 import next from "next"
 import { Server } from "socket.io"
+import type { ChatObj } from "./types"
 
 const dev = process.env.NODE_ENV !== "production"
 const hostname = "localhost"
@@ -16,11 +17,11 @@ app.prepare().then(() => {
 
   io.on("connection", (socket) => {
     console.log("A user connected")
-    socket.on("message_from_client", (data) => {
-      // // Optionally, you can emit the data to all connected clients
-      io.emit("message_to_client", data)
+    socket.on("message_from_client", (data: ChatObj) => {
+      socket.broadcast.emit("message_to_client", data)
     })
   })
+
   httpServer
     .once("error", (err) => {
       console.error(err)

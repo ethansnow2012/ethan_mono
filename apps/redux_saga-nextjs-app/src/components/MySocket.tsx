@@ -5,6 +5,7 @@ import type { RootState } from "@/store"
 import { v4 as uuidv4 } from "uuid"
 
 export default function () {
+  const msgInputRef = useRef<HTMLInputElement>(null)
   const isConnected = useSelector((state: RootState) => state.socketSlice.connected)
   const chatMessages = useSelector((state: RootState) => state.socketSlice.chatMessages)
   const id = uuidv4()
@@ -15,15 +16,22 @@ export default function () {
       dispatch({ type: "SOCKET_DISCONNECT_REQUESTED" })
     }
   }, [])
+  const handleSendMessage = () => {
+    if (isConnected && msgInputRef.current && msgInputRef.current.value.trim() !== "") {
+      dispatch({ type: "SEND_MESSAGE_REQUESTED", payload: msgInputRef.current.value })
+      msgInputRef.current.value = ""
+    }
+  }
   return (
     <div>
       <div>This is socket page.</div>
       <div> Is connected: {isConnected ? "true" : "false"}</div>
       <div>
-        <button onClick={() => dispatch({ type: "SEND_MESSAGE_REQUESTED", payload: "Hello" })}>Send Message</button>
+        <input type="text" ref={msgInputRef} />
+        <button onClick={() => handleSendMessage()}>Send Message</button>
         <div>
           {chatMessages.map((el, i) => {
-            return <div key={id + i}>{JSON.stringify(el.msg)}</div>
+            return <div key={id + i}>{el.msg}</div>
           })}
         </div>
       </div>
