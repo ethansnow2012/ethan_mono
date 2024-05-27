@@ -8,16 +8,19 @@ const port = 3000
 // when using middleware `hostname` and `port` must be provided below
 const app = next({ dev, hostname, port })
 const handler = app.getRequestHandler()
-
+console.log("app started")
 app.prepare().then(() => {
   const httpServer = createServer(handler)
 
   const io = new Server(httpServer)
 
   io.on("connection", (socket) => {
-    // ...
+    console.log("A user connected")
+    socket.on("message_from_client", (data) => {
+      // // Optionally, you can emit the data to all connected clients
+      io.emit("message_to_client", data)
+    })
   })
-
   httpServer
     .once("error", (err) => {
       console.error(err)

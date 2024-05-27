@@ -62,14 +62,14 @@ function* disconnect(): Generator<any, void, Socket> {
 
 function createSocketChannel(socket: Socket): EventChannel<any> {
   return eventChannel((emit) => {
-    const messageHandler = (message: any) => {
-      emit({ type: "message", payload: message })
+    const messageHandler = (message: string) => {
+      emit(message)
     }
 
-    socket.on("message", messageHandler)
+    socket.on("message_to_client", messageHandler)
 
     return () => {
-      socket.off("message", messageHandler)
+      socket.off("message_to_client", messageHandler)
     }
   })
 }
@@ -80,8 +80,8 @@ function* handleSocketMessages(socket: Socket): Generator<any, void, any> {
 
   try {
     while (true) {
-      const action = yield take(socketChannel)
-      yield put(socketPiping.receiveMessage({ msg: action.payload }))
+      const msg = yield take(socketChannel)
+      yield put(socketPiping.receiveMessage({ msg: msg }))
     }
   } finally {
     if (yield cancelled()) {
@@ -118,6 +118,8 @@ function* watchSocketRequests(): Generator<any, void, any> {
       }
     } else if (action.type === "SEND_MESSAGE_REQUESTED") {
       // should sent do backend instead of put to store
+      console.log("send message")
+      socket?.emit("message_from_client", "hello")
       yield put(socketPiping.receiveMessage({ msg: action.payload }))
     }
   }
