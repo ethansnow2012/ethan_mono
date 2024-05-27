@@ -7,3 +7,5 @@ export interface Todo {
 }
 
 export type TypedResponse<T> = _TypedResponse<T>
+
+export type ChatObj = { msg: string }
