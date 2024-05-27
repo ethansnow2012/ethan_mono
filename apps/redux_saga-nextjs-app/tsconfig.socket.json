@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+      "module": "commonjs",//esnext:  not natively supported by Node.js without additional configuration
+      // "outDir": "./dist/out-tsc",
+      "types": ["node", "jest"]
+    },
+    "include": ["src/tests/**/*.ts"]
+  }
