@@ -9,7 +9,7 @@ import { ChatObj } from "@/types"
 
 let socket: Socket | null = null
 
-const doing = {
+export const socketDoing = {
   connect: () => {
     socket = io("http://localhost:3000") // Adjust the URL as needed
     return new Promise<Socket>((resolve, reject) => {
@@ -29,7 +29,7 @@ const doing = {
   },
 }
 
-function* connect(): Generator<any, void, Socket> {
+export function* connect(): Generator<any, void, Socket> {
   console.log("connect socket")
   if (socket && socket.connected) {
     console.log("Socket is already connected")
@@ -37,7 +37,7 @@ function* connect(): Generator<any, void, Socket> {
   }
 
   try {
-    socket = yield call(doing.connect)
+    socket = yield call(socketDoing.connect)
     yield put(socketPiping.connected())
 
     // Fork a new saga to handle incoming messages
@@ -45,7 +45,7 @@ function* connect(): Generator<any, void, Socket> {
   } catch (error) {
     console.error("Socket connection error:", error)
     alert("Socket connection error:")
-    // yield put(socketPiping.connectionFailed(error));
+    yield put(socketPiping.connectionFailed())
   }
 }
 
@@ -56,7 +56,7 @@ function* disconnect(): Generator<any, void, Socket> {
     return
   }
 
-  yield call(doing.disconnect, socket)
+  yield call(socketDoing.disconnect, socket)
   yield put(socketPiping.disconnected())
 }
 
@@ -72,7 +72,7 @@ function createSocketChannel(socket: Socket): EventChannel<any> {
   })
 }
 
-function* handleSocketMessages(socket: Socket): Generator<any, void, any> {
+export function* handleSocketMessages(socket: Socket): Generator<any, void, any> {
   console.log("handleSocketMessages")
   const socketChannel = yield call(createSocketChannel, socket)
 

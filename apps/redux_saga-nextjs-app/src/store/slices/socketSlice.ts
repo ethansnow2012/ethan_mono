@@ -31,6 +31,9 @@ export const socketSlice = createSlice({
       console.log("receiveMessage", payload.payload)
       state.chatMessages.push(payload.payload)
     },
+    connectionFailed: (state) => {
+      state.connected = false
+    },
   },
 })
 
