@@ -1,6 +1,6 @@
 "use client"
 import React, { useRef } from "react"
-import useMyOptimistic from "@/hook/useMyOptimistic"
+import useMyOptimistic from "@/hook/useMyOptimistic_best"
 
 type Msg = { text: string }
 
