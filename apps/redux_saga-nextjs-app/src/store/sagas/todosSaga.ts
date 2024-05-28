@@ -2,6 +2,7 @@ import type { Todo, TypedResponse } from "@/types"
 import { getTodos, createTodo, updateTodo, deleteTodo } from "@/apiActions"
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects"
 import { todosPiping } from "../slices/todosSlice"
+import { counterPiping } from "../slices/counterSlice"
 
 function* getTodosAction() {
   yield put(todosPiping.startFetchingTodos())
@@ -12,6 +13,7 @@ function* getTodosAction() {
 function* createTodoAction({ payload }: { type: "CREATE_TODO_REQUESTED"; payload: string }) {
   yield createTodo(payload)
   yield put({ type: "TODOS_FETCH_REQUESTED" })
+  yield put(counterPiping.increment())
 }
 
 // spliting procedure
