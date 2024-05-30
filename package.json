@@ -15,8 +15,11 @@
     "ts-node": "^10.9.2"
   },
   "scripts": {
-    "apps:react_next": "cd apps/react_next_practice && pnpm run dev",
-    "apps:my_three": "cd apps/my_first_three_project_with_nuxt && pnpm run dev",
+    "apps:my_first_three_project_with_nuxt": "cd apps/my_first_three_project_with_nuxt && pnpm run dev",
+    "apps:react_next_practice": "cd apps/react_next_practice && pnpm run dev",
+    "apps:redux_saga-nextjs-app": "cd apps/redux_saga-nextjs-app && pnpm run dev",
+    "apps:trying_express-zod-api_with-socket-chat": "cd packages/trying_express-zod-api_with-socket-chat && pnpm run dev",
+    "apps:ts_pratice_script": "cd apps/ts_pratice_script && pnpm run dev",
     "packages:using_core": "cd packages/using_core && pnpm run dev"
   }
 }

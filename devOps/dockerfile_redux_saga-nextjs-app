@@ -1,0 +1,33 @@
+# Use the official Node.js image as the base image
+FROM node:18-alpine
+
+# Set the working directory
+WORKDIR /app_workspace
+
+# Install pnpm globally
+RUN npm install -g pnpm && \
+    pnpm config set store-dir ~/.pnpm-store
+
+# Copy the main package.json and pnpm-lock.yaml
+COPY package.json pnpm-lock.yaml ./
+
+# Copy all package.json files from the packages and apps directories
+COPY packages/*/package.json ./packages/
+COPY apps/*/package.json ./apps/
+
+# Install dependencies using pnpm
+RUN pnpm install
+
+# Copy the rest of the application code to the container
+COPY . .
+
+# Install dependencies for the apps/react_next_practice separately
+WORKDIR /app_workspace/apps/redux_saga-nextjs-app
+RUN pnpm install
+
+
+# Set the command to run your CLI tool
+CMD ["pnpm", "apps:redux_saga-nextjs-app"]
+
+# Expose any necessary ports (if applicable)
+EXPOSE 3000
