@@ -1,6 +1,21 @@
 ### use "pnpm" by default
 
+There are three way to start this project. Thank you for interested in my works and practices.
+
+1. CLI
+
 ```
-Use Makefile to start if you prefer. Or Node.js 18 + pnpm is fine.
-Docker and devOps structure still on-going. Not fully tested but should work now.
+node.js ./cli.js
+```
+
+2. Start as a normal node monorepo
+
+```
+Node.js 18 + pnpm install -> go to project -> pnpm run install
+```
+
+3. Makefile to start docker
+
+```
+make <xxxxxx(see Makefile)>
 ```
