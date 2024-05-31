@@ -25,6 +25,7 @@ COPY . .
 WORKDIR /app_workspace/apps/react_next_practice
 RUN pnpm install
 
+WORKDIR /app_workspace
 
 # Set the command to run your CLI tool
 CMD ["pnpm", "apps:react_next_practice"]

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev:with_socket": "ts-node --project tsconfig.socket.json ./src/server.ts --port 3000",
-    "dev": "next dev --port 3000",
+    "dev": "ts-node --project tsconfig.socket.json ./src/server.ts --port 3000",
+    "dev:og": "next dev --port 3000",
     "build": "next build",
     "start": "next start",
     "start:with_socket": "NODE_ENV=production ts-node --project tsconfig.socket.json ./src/server.ts",

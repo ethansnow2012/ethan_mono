@@ -25,6 +25,8 @@ COPY . .
 WORKDIR /app_workspace/apps/ts_pratice_script
 RUN pnpm install
 
+WORKDIR /app_workspace
+
 
 # Set the command to run your CLI tool
 CMD ["pnpm", "apps:ts_pratice_script"]
