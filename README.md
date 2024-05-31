@@ -5,7 +5,7 @@ There are three way to start this project. Thank you for interested in my works 
 1. CLI
 
 ```
-node.js ./cli.js
+node ./cli.js
 ```
 
 2. Start as a normal node monorepo
