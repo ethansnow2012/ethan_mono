@@ -1,5 +1,5 @@
 import { QueryClient, HydrationBoundary, dehydrate } from "@tanstack/react-query"
-import { fetchPosts } from "@/actions"
+import { fetchPosts } from "@/actions/serverAction"
 import HomeClient from "@/components/homeClient"
 
 export default async function Home() {

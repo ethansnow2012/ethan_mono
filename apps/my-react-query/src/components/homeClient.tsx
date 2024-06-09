@@ -1,8 +1,9 @@
 "use client"
 import React from "react"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query"
 import { useAction } from "next-safe-action/hooks"
-import { fetchPosts, createPost } from "@/actions"
+import { fetchPosts, createPost } from "@/actions/serverAction"
+import { createPostFromClient } from "@/actions/clientAction"
 
 export default function HomeClient() {
   const queryClient = useQueryClient()
@@ -14,7 +15,13 @@ export default function HomeClient() {
 
   const { execute: executeCreatePost } = useAction(createPost, {
     onSuccess: () => {
-      //queryClient.invalidateQueries(["posts"]);
+      queryClient.invalidateQueries({ queryKey: ["posts"] })
+    },
+  })
+
+  const { mutate: mutateFromClient} = useMutation({
+    mutationFn: createPostFromClient,
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] })
     },
   })
@@ -34,6 +41,10 @@ export default function HomeClient() {
         ))
       )}
       <button onClick={() => executeCreatePost({ title: "New Post", body: "New Post Body" })}>Create Post</button>
+      <button onClick={()=>mutateFromClient(
+        { title: "New Post", body: "New Post Body" },
+        { onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }) }
+      )}>Create Post(mutationFromClient)</button>
     </div>
   )
 }
