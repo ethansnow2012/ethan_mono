@@ -28,6 +28,55 @@ importers:
         specifier: ^8.12.0
         version: 8.12.0
 
+  apps/my-react-query:
+    dependencies:
+      '@tanstack/react-query':
+        specifier: ^5.40.1
+        version: 5.40.1(react@18.3.1)
+      '@tanstack/react-query-devtools':
+        specifier: ^5.40.1
+        version: 5.40.1(@tanstack/react-query@5.40.1)(react@18.3.1)
+      next:
+        specifier: 14.2.3
+        version: 14.2.3(react-dom@18.3.1)(react@18.3.1)
+      next-safe-action:
+        specifier: ^6.2.0
+        version: 6.2.0(next@14.2.3)(react@18.3.1)
+      react:
+        specifier: ^18
+        version: 18.3.1
+      react-dom:
+        specifier: ^18
+        version: 18.3.1(react@18.3.1)
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@types/node':
+        specifier: ^20
+        version: 20.12.11
+      '@types/react':
+        specifier: ^18
+        version: 18.3.2
+      '@types/react-dom':
+        specifier: ^18
+        version: 18.3.0
+      eslint:
+        specifier: ^8
+        version: 8.57.0
+      eslint-config-next:
+        specifier: 14.2.3
+        version: 14.2.3(eslint@8.57.0)(typescript@5.4.5)
+      postcss:
+        specifier: ^8
+        version: 8.4.38
+      tailwindcss:
+        specifier: ^3.4.1
+        version: 3.4.3(ts-node@10.9.2)
+      typescript:
+        specifier: ^5
+        version: 5.4.5
+
   apps/my_first_three_project_with_nuxt:
     dependencies:
       '@vueuse/core':
@@ -644,6 +693,63 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
+
+  /@decs/typeschema@0.12.2(zod@3.23.8):
+    resolution: {integrity: sha512-PA8uAH/Xfsa5X2UNNSnb5i6vB8qWZywp4+d2U8kNMCO7qwirYRPbFCHwIfWBJyURh4rULn3Ey+VBADLcK2xxaQ==}
+    deprecated: TypeSchema has been restructured. Install @typeschema/main or @typeschema/all instead.
+    peerDependencies:
+      '@deepkit/type': ^1.0.1-alpha.113
+      '@effect/schema': ^0.60.6
+      '@sinclair/typebox': ^0.32.11
+      ajv: ^8.12.0
+      arktype: ^1.0.29-alpha
+      effect: ^2.1.2
+      fp-ts: ^2.16.2
+      io-ts: ^2.2.21
+      joi: ^17.12.0
+      ow: ^0.28.2
+      runtypes: ^6.7.0
+      superstruct: ^1.0.3
+      valibot: ^0.26.0
+      vite: ^5.0.12
+      yup: ^1.3.3
+      zod: ^3.22.4
+    peerDependenciesMeta:
+      '@deepkit/type':
+        optional: true
+      '@effect/schema':
+        optional: true
+      '@sinclair/typebox':
+        optional: true
+      ajv:
+        optional: true
+      arktype:
+        optional: true
+      effect:
+        optional: true
+      fp-ts:
+        optional: true
+      io-ts:
+        optional: true
+      joi:
+        optional: true
+      ow:
+        optional: true
+      runtypes:
+        optional: true
+      superstruct:
+        optional: true
+      valibot:
+        optional: true
+      vite:
+        optional: true
+      yup:
+        optional: true
+      zod:
+        optional: true
+    dependencies:
+      zod: 3.23.8
+    dev: false
 
   /@esbuild/aix-ppc64@0.20.2:
     resolution: {integrity: sha512-D+EBOJHXdNZcLJRBkhENNG8Wji2kgc9AZ9KiPr1JuZjsNtyHzrsfLRrY0tk2H2aoFu6RANO1y1iPPUCDYWkb5g==}
@@ -2198,6 +2304,34 @@ packages:
     dependencies:
       '@swc/counter': 0.1.3
       tslib: 2.6.2
+    dev: false
+
+  /@tanstack/query-core@5.40.0:
+    resolution: {integrity: sha512-eD8K8jsOIq0Z5u/QbvOmfvKKE/XC39jA7yv4hgpl/1SRiU+J8QCIwgM/mEHuunQsL87dcvnHqSVLmf9pD4CiaA==}
+    dev: false
+
+  /@tanstack/query-devtools@5.37.1:
+    resolution: {integrity: sha512-XcG4IIHIv0YQKrexTqo2zogQWR1Sz672tX2KsfE9kzB+9zhx44vRKH5si4WDILE1PIWQpStFs/NnrDQrBAUQpg==}
+    dev: false
+
+  /@tanstack/react-query-devtools@5.40.1(@tanstack/react-query@5.40.1)(react@18.3.1):
+    resolution: {integrity: sha512-/AN2UsbuL+28/KSlBkVHq/4chHTEp4l2UWTKWixXbn4pprLQrZGmQTAKN4tYxZDuNwNZY5+Zp67pDfXj+F/UBA==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.40.1
+      react: ^18 || ^19
+    dependencies:
+      '@tanstack/query-devtools': 5.37.1
+      '@tanstack/react-query': 5.40.1(react@18.3.1)
+      react: 18.3.1
+    dev: false
+
+  /@tanstack/react-query@5.40.1(react@18.3.1):
+    resolution: {integrity: sha512-gOcmu+gpFd2taHrrgMM9RemLYYEDYfsCqszxCC0xtx+csDa4R8t7Hr7SfWXQP13S2sF+mOxySo/+FNXJFYBqcA==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      '@tanstack/query-core': 5.40.0
+      react: 18.3.1
     dev: false
 
   /@trysound/sax@0.2.0:
@@ -6571,6 +6705,36 @@ packages:
       next: 14.2.3(react-dom@18.3.1)(react@18.3.1)
       react: 18.3.1
       react-redux: 9.1.2(@types/react@18.3.2)(react@18.3.1)(redux@5.0.1)
+    dev: false
+
+  /next-safe-action@6.2.0(next@14.2.3)(react@18.3.1):
+    resolution: {integrity: sha512-gssUs3OLoNjLXZalrQaly38s/mUtXsIcKWGIK3jFkW8GHl0/Xhq+3G8yEEyObET2YlYqUj79K+mH3iTNBLDcMw==}
+    engines: {node: '>=18.17'}
+    peerDependencies:
+      next: '>= 14.0.0'
+      react: '>= 18.2.0'
+    dependencies:
+      '@decs/typeschema': 0.12.2(zod@3.23.8)
+      next: 14.2.3(react-dom@18.3.1)(react@18.3.1)
+      react: 18.3.1
+    optionalDependencies:
+      zod: 3.23.8
+    transitivePeerDependencies:
+      - '@deepkit/type'
+      - '@effect/schema'
+      - '@sinclair/typebox'
+      - ajv
+      - arktype
+      - effect
+      - fp-ts
+      - io-ts
+      - joi
+      - ow
+      - runtypes
+      - superstruct
+      - valibot
+      - vite
+      - yup
     dev: false
 
   /next@14.2.3(react-dom@18.3.1)(react@18.3.1):
